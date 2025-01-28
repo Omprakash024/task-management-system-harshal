@@ -52,12 +52,16 @@ def add_team_member(team_id: int,
     
     except Exception as e:
         return {"message": str(e)}
+    except Exception as e:
+        # Log or handle other exceptions
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal server error")
     
 
 @router.delete("/team/{team_id}/remove-member", response_model= ResponseMessage)
 def remove_member(team_id:int, request: TeamRemoveMember, db:Session=Depends(get_db),
                   current_user: dict = Depends(get_current_user)):
-    try:
+    
+        # breakpoint()
         team = db.query(Team).filter(Team.id == team_id).first()
 
         if not team:
@@ -74,5 +78,4 @@ def remove_member(team_id:int, request: TeamRemoveMember, db:Session=Depends(get
         
         db.delete(member)
         db.commit()
-    except Exception as e:
-        return {"message": str(e)}
+        return {"message": "User Deleted from the team successfully"}
