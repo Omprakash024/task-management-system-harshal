@@ -69,6 +69,7 @@ class TaskUpdateRequest(BaseModel):
     task_id: int
     description: Optional[str] = None
     priority: PriorityStatus
+    status: TaskStatus
     assignee_id: Optional[int] = None
 
 
@@ -115,4 +116,5 @@ class TaskResponseSchema(BaseModel):
     class Config:
         from_attributes = True 
     
-    
+class RoleCreateRequest(BaseModel):
+    role_name: str
